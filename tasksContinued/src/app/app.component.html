@@ -1,22 +1,33 @@
 <h1>Restful Tasks API</h1>
 <p *ngIf="error">{{ error | json }}</p>
 <div class="row">
-  <form class="col" (submit)="newTask()">
-    <h3>Add Task</h3>
-    <p>Title: <input type="text" name="new_task.title" [(ngModel)]="new_task.title" /></p>
-    <p>Description: <input type="text" name="new_task.description" [(ngModel)]="new_task.description" /></p>
-    <p><input class="btn btn-primary" type="submit" value="Create Task" /></p>
-  </form>
-  <form class="col" *ngIf="show_task['_id']" (submit)="updateTask(show_task['_id'])">
-      <h3>Update Task</h3>
-      <p>Title: <input type="text" value="{{show_task.title}}" name="show_task.title" [(ngModel)]="show_task.title" /></p>
-      <p>Description: <input type="text" value="{{show_task.description}}" name="show_task.description" [(ngModel)]="show_task.description" /></p>
-      <p><input class="btn btn-primary" type="submit" value="Update Task" /> <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button></p>
-  </form>
-</div>
-<h3>Task List</h3>
-<div *ngFor="let task of tasks">
-  <h4>{{task.title}}</h4>
-  <p>{{task.description}}</p>
-  <p><button (click)="getTask(task._id)">Edit</button> <button (click)="deleteTask(task._id)">Delete</button></p>
+  <div class="col">
+    <h3>Task List</h3>
+    <div *ngFor="let task of tasks">
+      <app-task [task]="task"></app-task>
+      <p><button class="btn btn-primary" (click)="getTask(task._id)">Edit</button> <button class="btn btn-danger" (click)="deleteTask(task._id)">Delete</button></p>
+    </div>
+  </div>
+  <div class="col">
+    <form (submit)="newTask()">
+      <h3>Add Task</h3>
+      <p>Title: <input type="text" name="new_task.title" [(ngModel)]="new_task.title" /></p>
+      <p>Description: <input type="text" name="new_task.description" [(ngModel)]="new_task.description" /></p>
+      <p><input class="btn btn-primary" type="submit" value="Create Task" /></p>
+    </form>
+    <div *ngIf="new_task['title'] || new_task['description']">
+      <h3>Preview Task</h3>
+      <app-task [task]="new_task"></app-task>
+    </div>
+    <form *ngIf="show_task['_id']" (submit)="updateTask(show_task['_id'])">
+        <h3>Update Task</h3>
+        <p>Title: <input type="text" value="{{show_task.title}}" name="show_task.title" [(ngModel)]="show_task.title" /></p>
+        <p>Description: <input type="text" value="{{show_task.description}}" name="show_task.description" [(ngModel)]="show_task.description" /></p>
+        <p><input class="btn btn-primary" type="submit" value="Update Task" /> <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button></p>
+    </form>
+    <div *ngIf="show_task['_id']">
+      <h3>Preview Update</h3>
+      <app-task [task]="show_task"></app-task>
+    </div>
+  </div>
 </div>
