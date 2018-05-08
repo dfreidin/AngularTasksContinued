@@ -1,9 +1,5 @@
 <h1>Restful Tasks API</h1>
-<h3>All the tasks:</h3>
-<ul>
-  <li *ngFor="let task of tasks">{{task["title"]}}: {{task["description"]}}</li>
-</ul>
-<h3>The third task:</h3>
-<ul>
-  <li>{{tasks[2]["title"]}}: {{tasks[2]["description"]}}</li>
-</ul>
+<p><button class="btn btn-primary" (click)="getTasksFromServices()">Get all tasks</button></p>
+<p *ngFor="let task of tasks">{{task.title}} <button class="btn secondary" (click)="getTask(task._id)">Show</button></p>
+<h4 *ngIf="show_task['title']">{{show_task.title}}</h4>
+<p *ngIf="show_task['description']">{{show_task.description}}</p>

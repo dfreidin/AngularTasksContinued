@@ -10,4 +10,7 @@ export class HttpService {
   getTasks() {
     return this._http.get("/tasks");
   }
+  getTask(id: string) {
+    return this._http.get(`/tasks/${id}`);
+  }
 }
